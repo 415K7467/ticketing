@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1> Edit ticket</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.priority) }}
+    {{ form_row(form.status) }}
+    <button type="submit">Save changes</button>
+    {{ form_end(form) }}
+{% endblock %}

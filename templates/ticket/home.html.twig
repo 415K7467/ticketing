@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1> Bienvenu sur le système de ticketing</h1>
+
+    <p>Il y a actuellement {{ counts['global_count'] }} tickets dans le système</p>
+    <ul>
+        <li>{{ counts['priorityHigh'] }} tickets avec une priorité haute</li>
+        <li>{{ counts['priorityMedium'] }} tickets avec une priorité moyenne</li>
+        <li>{{ counts['priorityLow'] }} tickets avec une priorité faible</li>
+        <li>{{ counts['statusNew'] }} nouveaux tickets</li>
+        <li>{{ counts['statusProgress'] }} tickets en cours d'assistance </li>
+        <li>{{ counts['statusResolved'] }} tickets résolus</li>
+    </ul>
+{% endblock %}

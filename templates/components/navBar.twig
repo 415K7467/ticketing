@@ -1,0 +1,20 @@
+<nav>
+    <div class="stat">
+        <p> {{ counts['global_count'] }} tickets dans le système</p>
+        <ul>
+            <li>{{ counts['priorityHigh'] }} priorité haute</li>
+            <li>{{ counts['priorityMedium'] }} priorité moyenne</li>
+            <li>{{ counts['priorityLow'] }} priorité faible</li>
+        </ul>
+        <ul>
+            <li>{{ counts['statusNew'] }} nouveaux tickets</li>
+            <li>{{ counts['statusProgress'] }} tickets en cours d'assistance </li>
+            <li>{{ counts['statusResolved'] }} tickets résolus</li>
+        </ul>
+    </div>
+    <div>
+        <form action="{{ path('new_ticket') }}" method="post">
+            <button type="submit" >Nouveau ticket</button>
+        </form>
+    </div>
+</nav>

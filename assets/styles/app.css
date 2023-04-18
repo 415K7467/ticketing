@@ -1,0 +1,24 @@
+*{
+    list-style: none;
+}
+
+body {
+    background-color: lightgray;
+}
+
+nav{
+    border: solid #878686;
+}
+
+nav, .stat{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.stat ul{
+    display: flex;
+    flex-direction: column;
+    height: 5rem;
+}
+

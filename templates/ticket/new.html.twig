@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <h1>{{ 'title.ticket_new' }}</h1>
+
+    {{ form_start(form) }}
+
+        {{ form_row(form.description) }}
+        {{ form_row(form.priority) }}
+        {{ form_row(form.status) }}
+
+        <button type="submit">
+            {{ 'Créer le ticket'|trans }}
+        </button>
+        {{ form_widget(form.saveAndCreateNew, {label: 'Enregistrer et faire un autre ticket'}) }}
+    {{ form_end(form) }}
+    <form action="{{ path('app_ticket') }}" method="post">
+        <button type="submit">Annuler</button>
+    </form>
+{% endblock %}
+
