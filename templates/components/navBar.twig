@@ -12,9 +12,25 @@
             <li>{{ counts['statusResolved'] }} tickets résolus</li>
         </ul>
     </div>
-    <div>
+    <div class="right">
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
         <form action="{{ path('new_ticket') }}" method="post">
             <button type="submit" >Nouveau ticket</button>
         </form>
+        |
+        <form action="{{ path('app_logout') }}" method="post">
+            <button type="submit" >Déconnexion</button>
+        </form>
+    {% else %}
+            <form action="{{ path('app_login') }}" method="post">
+                <button type="submit" >Connexion</button>
+            </form>
+            |
+            <form action="{{ path('app_register') }}" method="post">
+                <button type="submit" >Nouveau compte</button>
+            </form>
+
+    {% endif %}
     </div>
 </nav>

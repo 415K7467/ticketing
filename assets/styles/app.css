@@ -10,7 +10,7 @@ nav{
     border: solid #878686;
 }
 
-nav, .stat{
+nav, .stat, .right{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -22,3 +22,6 @@ nav, .stat{
     height: 5rem;
 }
 
+.right{
+    gap: 10px;
+}
