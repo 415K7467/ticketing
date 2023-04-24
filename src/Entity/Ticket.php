@@ -33,6 +33,10 @@ class Ticket
     #[ORM\Column(length: 255)]
     private ?int $status = null;
 
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $author = null;
+
     #[ORM\Column(type: "datetime")]
     private DateTimeInterface|null $createDate = null;
 
@@ -83,6 +87,15 @@ class Ticket
         $this->status = $status;
 
         return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(User $author): void{
+        $this->author = $author;
     }
 
     public function getCreateDate(): ?DateTimeInterface
