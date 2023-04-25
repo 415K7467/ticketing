@@ -5,8 +5,10 @@
 
     {{ form_start(form) }}
     {{ form_row(form.description) }}
-    {{ form_row(form.priority) }}
-    {{ form_row(form.status) }}
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPPORT') %}
+        {{ form_row(form.priority) }}
+        {{ form_row(form.status) }}
+    {% endif %}
     <button type="submit">Save changes</button>
     {{ form_end(form) }}
 {% endblock %}

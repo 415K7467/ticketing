@@ -1,0 +1,12 @@
+<article class="ticket" style="border: solid; margin: 10px">
+    <p>
+        <span> {{ user.username }}</span>
+        <span> {{ user.roles[0] }}</span>
+    </p>
+    {% if user.roles[0]!='ROLE_ADMIN' %}
+        <form action="{{ path('user_delete', {'id':user.id}) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit">Supprimer l'utilisateur</button>
+        </form>
+    {% endif %}
+</article>
