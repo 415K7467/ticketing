@@ -6,7 +6,6 @@ use App\Repository\TicketRepository;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Form\FormInterface;
 
 #[ORM\Entity(repositoryClass: TicketRepository::class)]
 class Ticket
@@ -33,12 +32,12 @@ class Ticket
     #[ORM\Column(length: 255)]
     private ?int $status = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $author = null;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tickets')]
+    #[ORM\JoinColumn(name: 'author_id', referencedColumnName: 'id')]
+    private ?User $author;
 
     #[ORM\Column(type: "datetime")]
-    private DateTimeInterface|null $createDate = null;
+    private DateTimeInterface|null $createDate;
 
     #[ORM\Column(type: "datetime", nullable: true)]
     private DateTimeInterface|null $updateDate = null;
@@ -89,13 +88,13 @@ class Ticket
         return $this;
     }
 
-    public function getAuthor(): ?User
+    public function getAuthor(): User
     {
         return $this->author;
     }
 
-    public function setAuthor(User $author): void{
-        $this->author = $author;
+    public function setAuthor(User $author){
+        $this->author=$author;
     }
 
     public function getCreateDate(): ?DateTimeInterface
@@ -121,4 +120,10 @@ class Ticket
 
         return $this;
     }
+
+    public function remove(TicketRepository $ticketRepository): void
+    {
+        $ticketRepository->remove($this);
+    }
+
 }

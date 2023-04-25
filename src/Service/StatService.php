@@ -3,7 +3,6 @@ namespace App\Service;
 
 use App\Entity\Ticket;
 use App\Repository\TicketRepository;
-use Doctrine\ORM\EntityManagerInterface;
 
 class StatService
 {

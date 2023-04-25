@@ -12,9 +12,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use DateTime;
+use Symfony\Component\Security\Core\Security;
 
 class TicketController extends AbstractController
 {
+    /**
+     * @var Security
+     */
+    private Security $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
 
     #[Route('/', name: 'app_ticket')]
     public function index(TicketRepository $repository): Response
@@ -30,28 +40,34 @@ class TicketController extends AbstractController
     #[Route('/new', name: 'new_ticket', methods: ['GET', 'POST'])]
     public function new(Request $request, TicketRepository $ticketRepository): Response
     {
-        $ticket = new Ticket();
-        $form = $this->createForm(TicketType::class, $ticket)
-            ->add('saveAndCreateNew', SubmitType::class);
+        $user = $this->security->getUser();
+        if ($user != null) {
+            $ticket = new Ticket();
+            $ticket->setAuthor(author: $this->getUser());
+            $form = $this->createForm(TicketType::class, $ticket)
+                ->add('saveAndCreateNew', SubmitType::class);
 
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-                $ticketRepository->save($ticket, true);
+            if ($request->isMethod('POST')) {
+                $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $ticketRepository->save($ticket, true);
 
-                $submit = $form->get('saveAndCreateNew');
-                if ($submit->isClicked()) {
-                    return $this->redirectToRoute('new_ticket');
+                    $submit = $form->get('saveAndCreateNew');
+                    if ($submit->isClicked()) {
+                        return $this->redirectToRoute('new_ticket');
+                    }
+
+                    return $this->redirectToRoute('app_ticket');
                 }
-
-                return $this->redirectToRoute('app_ticket');
             }
+
+            return $this->render('ticket/new.html.twig', [
+                'ticket' => $ticket,
+                'form' => $form,
+            ]);
         }
 
-        return $this->render('ticket/new.html.twig', [
-            'ticket' => $ticket,
-            'form' => $form,
-        ]);
+        return $this->redirectToRoute('app_login');
     }
 
     #[Route('/ticket/{id}', name: 'ticket_show')]
@@ -100,8 +116,8 @@ class TicketController extends AbstractController
         return $this->redirectToRoute('app_ticket');
     }
 
-    public function stats(StatService $stats):Response
+    public function stats(StatService $stats): Response
     {
-        return $this->render('components/navBar.twig',['counts'=>$stats->getAll()]);
+        return $this->render('components/navBar.twig', ['counts' => $stats->getAll()]);
     }
 }
