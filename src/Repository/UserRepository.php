@@ -56,6 +56,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
+    public function setRoles(User $user, String $roles): void
+    {
+        $user->setRoles($roles);
+
+        $this->save($user, true);
+    }
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */
@@ -79,5 +86,5 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 //            ->getQuery()
 //            ->getOneOrNullResult()
 //        ;
-//    }
+//    }public function setRoles(User$user,string$roles){
 }

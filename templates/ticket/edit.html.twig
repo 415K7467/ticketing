@@ -9,7 +9,7 @@
         {{ form_row(form.priority) }}
         {{ form_row(form.status) }}
     {% endif %}
-    <button type="submit">Sauvegarder les changemenets</button>
+    <button type="submit">Sauvegarder les changements</button>
     {{ form_end(form) }}
     <form action="{{ path('ticket_delete', {'id':ticket.id}) }}" method="post">
         <input type="hidden" name="_method" value="DELETE">

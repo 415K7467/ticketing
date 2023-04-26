@@ -1,21 +1,8 @@
 <article class="ticket" style="border: solid; margin: 10px">
     <h3>{{ user.username }}</h3>
+    <span>{{ user.roles[0] }}</span>
     {% if user.roles[0]!='ROLE_ADMIN' %}
-        <form action="{{ path('user_edit', {'id':user.id}) }}" method="get">
-            <label for="role-select"> Role </label>
-            <select name="roles" id="role-select">
-                {% if user.roles[0]=='ROLE_USER' %}
-                    <option value='ROLE_USER'>ROLE_USER</option>
-                    <option value='ROLE_ADMIN'>ROLE_ADMIN</option>
-                    <option value='ROLE_SUPPORT '>ROLE_SUPPORT </option>
-                {% else %}
-                    <option value='ROLE_SUPPORT '>ROLE_SUPPORT </option>
-                    <option value='ROLE_ADMIN'>ROLE_ADMIN</option>
-                    <option value='ROLE_USER'>ROLE_USER</option>
-                {% endif %}
-            </select>
-            <button type="submit">Save changes</button>
-        </form>
+        <a href="{{ path('user_edit', {'id': user.id}) }}">Edit</a>
 
         <form action="{{ path('user_delete', {'id':user.id}) }}" method="post">
             <input type="hidden" name="_method" value="DELETE">

@@ -15,8 +15,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    const ROLE_USER = 'ROLE_USER';
     const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_SUPPORT = 'ROLE_SUPPORT';
+    const ROLE_USER = 'ROLE_USER';
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -95,16 +96,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function addTicket(Ticket $ticket): void
-    {
-        $this->tickets->add($ticket);
-    }
-
-    public function removeTicket(TicketRepository $ticketRepository, Ticket $ticket)
-    {
-        $ticket->remove($ticketRepository);
-    }
-
     /**
      * @see UserInterface
      */
@@ -112,5 +103,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function setRoles(string $roles): void
+    {
+        if($roles=='ROLE_ADMIN'){
+            $this->roles=self::ROLE_ADMIN;
+        }
+        elseif ($roles=='ROLE_SUPPORT'){
+            $this->roles=self::ROLE_SUPPORT;
+        }
+        elseif ($roles=='ROLE_USER'){
+            $this->roles=self::ROLE_USER;
+        }
     }
 }
