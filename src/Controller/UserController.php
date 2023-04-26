@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[IsGranted('ROLE_ADMIN')]
 class UserController extends AbstractController
 {
-    #[IsGranted('ROLE_ADMIN')]
     #[Route(path: 'admin/', name: 'app_users')]
     public function listUsers(UserRepository $repository): Response
     {
@@ -24,7 +24,6 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[IsGranted('ROLE_ADMIN')]
     #[Route(path: 'admin/{id}/edit', name: 'user_edit')]
     public function editUser(UserRepository $userRepository, Request $request, User $user): Response
     {
@@ -42,7 +41,6 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[IsGranted('ROLE_ADMIN')]
     #[Route(path: 'admin/{id}/delete', name: 'user_delete')]
     public function deleteUser(UserRepository $userRepository, User $user): Response
     {

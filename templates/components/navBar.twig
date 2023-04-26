@@ -8,29 +8,34 @@
         </ul>
         <ul>
             <li>{{ counts['statusNew'] }} nouveaux tickets</li>
-            <li>{{ counts['statusProgress'] }} tickets en cours d'assistance </li>
+            <li>{{ counts['statusProgress'] }} tickets en cours d'assistance</li>
             <li>{{ counts['statusResolved'] }} tickets résolus</li>
         </ul>
     </div>
     <div class="right">
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-
-        <form action="{{ path('new_ticket') }}" method="post">
-            <button type="submit" >Nouveau ticket</button>
-        </form>
-        |
-        <form action="{{ path('app_logout') }}" method="post">
-            <button type="submit" >Déconnexion</button>
-        </form>
-    {% else %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <form action="{{ path('app_users') }}" method="post">
+                    <button type="submit">Panel Admin</button>
+                </form>
+                |
+            {% endif %}
+            <form action="{{ path('new_ticket') }}" method="post">
+                <button type="submit">Nouveau ticket</button>
+            </form>
+            |
+            <form action="{{ path('app_logout') }}" method="post">
+                <button type="submit">Déconnexion</button>
+            </form>
+        {% else %}
             <form action="{{ path('app_login') }}" method="post">
-                <button type="submit" >Connexion</button>
+                <button type="submit">Connexion</button>
             </form>
             |
             <form action="{{ path('app_register') }}" method="post">
-                <button type="submit" >Nouveau compte</button>
+                <button type="submit">Nouveau compte</button>
             </form>
 
-    {% endif %}
+        {% endif %}
     </div>
 </nav>

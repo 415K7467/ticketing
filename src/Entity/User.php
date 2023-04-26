@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use App\Form\UserType;
-use App\Repository\TicketRepository;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

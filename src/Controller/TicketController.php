@@ -7,6 +7,7 @@ use App\Form\TicketType;
 use App\Repository\TicketRepository;
 use App\Service\StatService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,6 +38,7 @@ class TicketController extends AbstractController
         ]);
     }
 
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[Route('/new', name: 'new_ticket', methods: ['GET', 'POST'])]
     public function new(Request $request, TicketRepository $ticketRepository): Response
     {
@@ -108,6 +110,8 @@ class TicketController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_SUPPORT')]
     #[Route('/ticket/{id}/delete', name: 'ticket_delete')]
     public function delete(TicketRepository $ticketRepository, Ticket $ticket): Response
     {
