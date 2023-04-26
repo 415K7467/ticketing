@@ -2,16 +2,17 @@
 
 namespace App\Form;
 
-
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserRoleType extends AbstractType
+class UserType extends AbstractType
 {
-    public function buildform(FormBuilderInterface $builder, array $options):void
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('roles', ChoiceType::class, [
@@ -21,6 +22,11 @@ class UserRoleType extends AbstractType
                     'ROLE_USER' => 'ROLE_USER',
                 ],
             ]);
+
+        $builder->get('roles')->addModelTransformer(new CallbackTransformer(
+            fn ($rolesAsArray) => count($rolesAsArray) ? $rolesAsArray[0]: null,
+            fn ($rolesAsString) => [$rolesAsString]
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver): void

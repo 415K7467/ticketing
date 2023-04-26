@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Form\UserType;
 use App\Repository\TicketRepository;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -105,15 +106,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function setRoles(string $roles): void
+    public function setRoles(array $param): void
     {
-        if($roles=='ROLE_ADMIN'){
+        $role = $param[0];
+        if($role=='ROLE_ADMIN'){
             $this->roles=self::ROLE_ADMIN;
         }
-        elseif ($roles=='ROLE_SUPPORT'){
+        elseif ($role=='ROLE_SUPPORT'){
             $this->roles=self::ROLE_SUPPORT;
         }
-        elseif ($roles=='ROLE_USER'){
+        elseif ($role=='ROLE_USER'){
             $this->roles=self::ROLE_USER;
         }
     }

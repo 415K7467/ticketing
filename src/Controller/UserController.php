@@ -3,9 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\UserRoleType;
+use App\Form\UserType;
 use App\Repository\UserRepository;
-use JetBrains\PhpStorm\NoReturn;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,8 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     #[IsGranted('ROLE_ADMIN')]
-    #[Route(path: 'admin/users', name: 'app_users')]
-    public function listUsers(Request $request, UserRepository $repository): Response
+    #[Route(path: 'admin/', name: 'app_users')]
+    public function listUsers(UserRepository $repository): Response
     {
         $users = $repository->findAll();
 
@@ -27,18 +26,19 @@ class UserController extends AbstractController
 
     #[IsGranted('ROLE_ADMIN')]
     #[Route(path: 'admin/{id}/edit', name: 'user_edit')]
-    public function editUser(Request $request, UserRepository $userRepository, int $id): Response
+    public function editUser(UserRepository $userRepository, Request $request, User $user): Response
     {
-        $user = $userRepository->find($id);
-        $form = $this->createForm(UserRoleType::class, $user);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $userRepository->setRole($user, $form->getData()->getRoles());
 
             return $this->redirectToRoute('app_users');
         }
 
         return $this->render('user/edit.html.twig', [
             'form' => $form->createView(),
+            'user' => $user,
         ]);
     }
 
