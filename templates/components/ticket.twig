@@ -11,12 +11,13 @@
         <p> modifié le : {{ ticket.updateDate|date('d-m-Y H:i:s') }} </p>
     {% endif %}
 
-
-    <form action="{{ path('ticket_edit', {'id':ticket.id}) }}" method="post">
-        <button type="submit">modifier le ticket </button>
-    </form>
-    <form action="{{ path('ticket_delete', {'id':ticket.id}) }}" method="post">
-        <input type="hidden" name="_method" value="DELETE">
-        <button type="submit">Supprimer le ticket </button>
-    </form>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <form action="{{ path('ticket_edit', {'id':ticket.id}) }}" method="post">
+            <button type="submit">modifier le ticket</button>
+        </form>
+        <form action="{{ path('ticket_delete', {'id':ticket.id}) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit">Supprimer le ticket</button>
+        </form>
+    {% endif %}
 </article>
