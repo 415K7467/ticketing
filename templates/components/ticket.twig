@@ -1,23 +1,25 @@
-<article class="ticket" style="border: solid; margin: 10px">
-    <p>
-        <span><i class="fa fa-calendar"></i> {{ ticket.createDate|date('d-m-Y H:i:s') }}</span>
-        <span><i class="fa fa-user"></i> {{ ticket.priority }}</span>
-        <span><i class="fa fa-user"></i> {{ ticket.status }}</span>
-    </p>
+<a href={{ path('ticket_show', {'id': ticket.id}) }}>
+    <article class="ticket" style="border: solid; margin: 10px">
+        <p>
+            <span><i class="fa fa-calendar"></i> {{ ticket.createDate|date('d-m-Y H:i:s') }}</span>
+            <span><i class="fa fa-user"></i> {{ ticket.priority }}</span>
+            <span><i class="fa fa-user"></i> {{ ticket.status }}</span>
+        </p>
 
-    <p>{{ ticket.description }}</p>
+        <p>{{ ticket.description }}</p>
 
-    {% if ticket.updateDate is not null %}
-        <p> modifié le : {{ ticket.updateDate|date('d-m-Y H:i:s') }} </p>
-    {% endif %}
+        {% if ticket.updateDate is not null %}
+            <p> modifié le : {{ ticket.updateDate|date('d-m-Y H:i:s') }} </p>
+        {% endif %}
 
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <form action="{{ path('ticket_edit', {'id':ticket.id}) }}" method="post">
-            <button type="submit">modifier le ticket</button>
-        </form>
-        <form action="{{ path('ticket_delete', {'id':ticket.id}) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE">
-            <button type="submit">Supprimer le ticket</button>
-        </form>
-    {% endif %}
-</article>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <form action="{{ path('ticket_edit', {'id':ticket.id}) }}" method="post">
+                <button type="submit">modifier le ticket</button>
+            </form>
+            <form action="{{ path('ticket_delete', {'id':ticket.id}) }}" method="post">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit">Supprimer le ticket</button>
+            </form>
+        {% endif %}
+    </article>
+</a>
