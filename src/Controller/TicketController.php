@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ticket;
+use App\Form\LimitTicketType;
 use App\Form\TicketType;
 use App\Repository\TicketRepository;
 use App\Service\StatService;
@@ -91,16 +92,20 @@ class TicketController extends AbstractController
     #[Route('/ticket/{id}/edit', name: 'ticket_edit')]
     public function edit(TicketRepository $ticketRepository, Request $request, Ticket $ticket): Response
     {
-        $form = $this->createForm(TicketType::class, $ticket);
+        if ($this->isGranted('ROLE_USER')){
+            $form = $this->createForm(LimitTicketType::class, $ticket);
+        }
+        else {
+            $form = $this->createForm(TicketType::class, $ticket);
+        }
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $ticket = $form->getData();
+
             $time = new DateTime();
             $ticket->setUpdateDate($time);
 
             $ticketRepository->save($ticket, true);
-
             return $this->redirectToRoute('ticket_show', ['id' => $ticket->getId()]);
         }
 
@@ -109,14 +114,11 @@ class TicketController extends AbstractController
             'ticket' => $ticket,
         ]);
     }
-
-    #[IsGranted('ROLE_ADMIN')]
-    #[IsGranted('ROLE_SUPPORT')]
+    
     #[Route('/ticket/{id}/delete', name: 'ticket_delete')]
     public function delete(TicketRepository $ticketRepository, Ticket $ticket): Response
     {
         $ticketRepository->remove($ticket, true);
-
         return $this->redirectToRoute('app_ticket');
     }
 
