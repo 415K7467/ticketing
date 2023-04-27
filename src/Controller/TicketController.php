@@ -47,7 +47,10 @@ class TicketController extends AbstractController
         if ($user != null) {
             $ticket = new Ticket();
             $ticket->setAuthor(author: $this->getUser());
-            $form = $this->createForm(TicketType::class, $ticket)
+            $ticket->setStatus(ticket::STATUS_NEW);
+            $form = $this->createForm(TicketType::class, $ticket, [
+                'edit_priority'=>true,
+            ])
                 ->add('saveAndCreateNew', SubmitType::class);
 
             if ($request->isMethod('POST')) {
@@ -66,7 +69,7 @@ class TicketController extends AbstractController
 
             return $this->render('ticket/new.html.twig', [
                 'ticket' => $ticket,
-                'form' => $form,
+                'form'=> $form,
             ]);
         }
 
@@ -92,12 +95,12 @@ class TicketController extends AbstractController
     #[Route('/ticket/{id}/edit', name: 'ticket_edit')]
     public function edit(TicketRepository $ticketRepository, Request $request, Ticket $ticket): Response
     {
-        if ($this->isGranted('ROLE_USER')){
-            $form = $this->createForm(LimitTicketType::class, $ticket);
-        }
-        else {
-            $form = $this->createForm(TicketType::class, $ticket);
-        }
+        $right=$this->isGranted('ROLE_ADMIN')||$this->isGranted('ROLE_SUPPORT');
+        $form = $this->createForm(TicketType::class, $ticket,[
+            'edit_priority'=>$right,
+            'edit_status'=>$right
+            ]
+        );
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $ticket = $form->getData();
