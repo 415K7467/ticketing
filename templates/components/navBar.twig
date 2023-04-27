@@ -13,7 +13,11 @@
         </ul>
     </div>
     <div class="right">
+        <form action="{{ path('app_ticket') }}" method="post">
+            <button type="submit">Menu</button>
+        </form>
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            |
             {% if is_granted('ROLE_ADMIN') %}
                 <form action="{{ path('app_users') }}" method="post">
                     <button type="submit">Panel Admin</button>
