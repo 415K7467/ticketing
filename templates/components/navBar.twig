@@ -1,5 +1,8 @@
-<nav>
-    <div class="stat">
+<nav class="navbar bg-light">
+    <ul>
+
+    </ul>
+    <div class="stat nav-item" role="presentation">
         <p> {{ counts['global_count'] }} tickets dans le système</p>
         <ul>
             <li>{{ counts['priorityHigh'] }} priorité haute</li>
@@ -14,30 +17,30 @@
     </div>
     <div class="right">
         <form action="{{ path('app_ticket') }}" method="post">
-            <button type="submit">Menu</button>
+            <button class="btn-secondary" type="submit">Menu</button>
         </form>
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             |
             {% if is_granted('ROLE_ADMIN') %}
                 <form action="{{ path('app_users') }}" method="post">
-                    <button type="submit">Panel Admin</button>
+                    <button class="btn-secondary" type="submit">Panel Admin</button>
                 </form>
                 |
             {% endif %}
             <form action="{{ path('new_ticket') }}" method="post">
-                <button type="submit">Nouveau ticket</button>
+                <button class="btn-secondary" type="submit">Nouveau ticket</button>
             </form>
             |
             <form action="{{ path('app_logout') }}" method="post">
-                <button type="submit">Déconnexion</button>
+                <button class="btn-secondary" type="submit">Déconnexion</button>
             </form>
         {% else %}
             <form action="{{ path('app_login') }}" method="post">
-                <button type="submit">Connexion</button>
+                <button class="btn-secondary" type="submit">Connexion</button>
             </form>
             |
             <form action="{{ path('app_register') }}" method="post">
-                <button type="submit">Nouveau compte</button>
+                <button class="btn-secondary" type="submit">Nouveau compte</button>
             </form>
 
         {% endif %}
