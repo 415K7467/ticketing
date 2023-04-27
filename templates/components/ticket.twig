@@ -33,6 +33,8 @@
             <p> modifié le : {{ ticket.updateDate|date('d-m-Y H:i:s') }} </p>
         {% endif %}
 
+        <p>écrit par : {{ ticket.author.username }}</p>
+
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <form action="{{ path('ticket_edit', {'id':ticket.id}) }}" method="post">
                 <button type="submit">modifier le ticket</button>
