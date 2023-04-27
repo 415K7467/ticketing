@@ -84,7 +84,7 @@ class TicketController extends AbstractController
             );
         }
 
-        return $this->render('components/ticket.twig', [
+        return $this->render('ticket/showTicket.html.twig', [
             'ticket' => $ticket,
         ]);
     }
