@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Ticket;
-use App\Form\LimitTicketType;
 use App\Form\TicketType;
 use App\Repository\TicketRepository;
 use App\Service\StatService;
@@ -33,9 +32,16 @@ class TicketController extends AbstractController
     {
         $tickets = $repository->findAll();
 
+        if ($this->getUser() != null) {
+            $userid = $this->getUser()->getId();
+        } else {
+            $userid = 0;
+        }
+
         return $this->render('ticket/index.html.twig', [
             'controller_name' => 'TicketController',
             'tickets' => $tickets,
+            'userid' => $userid,
         ]);
     }
 
@@ -49,7 +55,7 @@ class TicketController extends AbstractController
             $ticket->setAuthor(author: $this->getUser());
             $ticket->setStatus(ticket::STATUS_NEW);
             $form = $this->createForm(TicketType::class, $ticket, [
-                'edit_priority'=>true,
+                'edit_priority' => true,
             ])
                 ->add('saveAndCreateNew', SubmitType::class);
 
@@ -69,7 +75,7 @@ class TicketController extends AbstractController
 
             return $this->render('ticket/new.html.twig', [
                 'ticket' => $ticket,
-                'form'=> $form,
+                'form' => $form,
             ]);
         }
 
@@ -87,21 +93,24 @@ class TicketController extends AbstractController
             );
         }
 
+        $userid = $this->getUser()->getId();
+
         return $this->render('ticket/showTicket.html.twig', [
             'ticket' => $ticket,
+            'userid' => $userid,
         ]);
     }
 
     #[Route('/ticket/{id}/edit', name: 'ticket_edit')]
     public function edit(TicketRepository $ticketRepository, Request $request, Ticket $ticket): Response
     {
-        $right=$this->isGranted('ROLE_ADMIN')||$this->isGranted('ROLE_SUPPORT');
-        $form = $this->createForm(TicketType::class, $ticket,[
-            'edit_priority'=>$right,
-            'edit_status'=>$right
-            ]
-        );
+        $right = $this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_SUPPORT');
+        $form = $this->createForm(TicketType::class, $ticket, [
+            'edit_priority' => $right,
+            'edit_status' => $right,
+        ]);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $ticket = $form->getData();
 
@@ -109,6 +118,7 @@ class TicketController extends AbstractController
             $ticket->setUpdateDate($time);
 
             $ticketRepository->save($ticket, true);
+
             return $this->redirectToRoute('ticket_show', ['id' => $ticket->getId()]);
         }
 
@@ -117,11 +127,12 @@ class TicketController extends AbstractController
             'ticket' => $ticket,
         ]);
     }
-    
+
     #[Route('/ticket/{id}/delete', name: 'ticket_delete')]
     public function delete(TicketRepository $ticketRepository, Ticket $ticket): Response
     {
         $ticketRepository->remove($ticket, true);
+
         return $this->redirectToRoute('app_ticket');
     }
 
