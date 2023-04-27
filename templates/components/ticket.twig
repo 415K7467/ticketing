@@ -1,24 +1,46 @@
-<article class="ticket" style="border: solid; margin: 10px">
-    <p>
-        <span><i class="fa fa-calendar"></i> {{ ticket.createDate|date('d-m-Y H:i:s') }}</span>
-        <span><i class="fa fa-user"></i> {{ ticket.priority }}</span>
-        <span><i class="fa fa-user"></i> {{ ticket.status }}</span>
-    </p>
+<a href={{ path('ticket_show', {'id': ticket.id}) }}>
+    <article class="ticket" style="border: solid; margin: 10px">
+        <span> {{ ticket.createDate|date('d-m-Y H:i:s') }}</span>
+        <span class="priority">
+                <p>Priorité :</p>
+                {% if ticket.priority == '1' %}
+                    <p>Haute</p>
 
-    <p>{{ ticket.description }}</p>
+                {% else %}
+                    {% if ticket.priority == '2' %}
+                        <p>Moyenne</p>
+                {% else %}
+                        <p>Faible</p>
+                    {% endif %}
+                {% endif %}
+        </span>
+        <span class="status">
+                <p>Status :</p>
+                {% if ticket.status == '1' %}
+                    <p>Nouveau</p>
+                {% else %}
+                    {% if ticket.status == '2' %}
+                        <p>En cours</p>
+                {% else %}
+                        <p>Résolue</p>
+                    {% endif %}
+                {% endif %}
+        </span>
 
-    {% if ticket.updateDate is not null %}
-        <p> modifié le : {{ ticket.updateDate|date('d-m-Y H:i:s') }} </p>
-    {% endif %}
+        <p class="description">{{ ticket.description }}</p>
 
-    <form action="{{ path('ticket_delete', {'id':ticket.id}) }}" method="post">
-        <input type="hidden" name="_method" value="DELETE">
-        <button type="submit">Supprimer le ticket </button>
-    </form>
+        {% if ticket.updateDate is not null %}
+            <p> modifié le : {{ ticket.updateDate|date('d-m-Y H:i:s') }} </p>
+        {% endif %}
 
-    <div>
-        <form action="{{ path('app_ticket') }}" method="post">
-            <button type="submit" >Précédent</button>
-        </form>
-    </div>
-</article>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <form action="{{ path('ticket_edit', {'id':ticket.id}) }}" method="post">
+                <button type="submit">modifier le ticket</button>
+            </form>
+            <form action="{{ path('ticket_delete', {'id':ticket.id}) }}" method="post">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit">Supprimer le ticket</button>
+            </form>
+        {% endif %}
+    </article>
+</a>
