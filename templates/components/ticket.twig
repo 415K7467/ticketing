@@ -39,10 +39,14 @@
             <form action="{{ path('ticket_edit', {'id':ticket.id}) }}" method="post">
                 <button type="submit">modifier le ticket</button>
             </form>
-            <form action="{{ path('ticket_delete', {'id':ticket.id}) }}" method="post">
-                <input type="hidden" name="_method" value="DELETE">
-                <button type="submit">Supprimer le ticket</button>
-            </form>
+            {% if (not is_granted('ROLE_USER') or ticket.author.id==userid) %}
+                <form action="{{ path('ticket_delete', {'id':ticket.id}) }}" method="post">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit">Supprimer le ticket</button>
+                </form>
+            {% else %}
+                <p>toto</p>
+            {% endif %}
         {% endif %}
     </article>
 </a>
