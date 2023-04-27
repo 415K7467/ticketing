@@ -114,9 +114,7 @@ class TicketController extends AbstractController
             'ticket' => $ticket,
         ]);
     }
-
-    #[IsGranted('ROLE_ADMIN')]
-    #[IsGranted('ROLE_SUPPORT')]
+    
     #[Route('/ticket/{id}/delete', name: 'ticket_delete')]
     public function delete(TicketRepository $ticketRepository, Ticket $ticket): Response
     {
