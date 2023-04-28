@@ -3,10 +3,48 @@
 {% block title %}Hello TicketController!{% endblock %}
 
 {% block body %}
-    <div class="example-wrapper">
-        <h1>Hello {{ controller_name }}! ✅</h1>
 
-        {% if tickets|length > 0 %}
+    {% if tickets|length > 0 %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped text-center">
+                        <thead class="table-dark">
+                        <th>
+                            Etat
+                        </th>
+                        <th>
+                            Priorité
+                        </th>
+                        <th>
+                            Auteur
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Edition
+                        </th>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <th>
+                                Actions
+                            </th>
+                        {% endif %}
+                        </thead>
+                        <tbody class="">
+                        {% for ticket in tickets %}
+                            {% include '/components/ticket.twig' with {'ticket': ticket} %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>pas de tickets</p>
+    {% endif %}
+{% endblock %}
+            {#
             <ul>
                 {% for ticket in tickets %}
                     {% include './components/ticket.twig' with {'ticket': ticket} %}
@@ -16,4 +54,4 @@
             <p>pas de tickets</p>
         {% endif %}
     </div>
-{% endblock %}
+{% endblock %} #}

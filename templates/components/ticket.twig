@@ -1,41 +1,107 @@
-<a href={{ path('ticket_show', {'id': ticket.id}) }}>
-    <article class="ticket" style="border: solid; margin: 10px">
-        <span> {{ ticket.createDate|date('d-m-Y H:i:s') }}</span>
-        <span class="priority">
-                <p>Priorité :</p>
-                {% if ticket.priority == '1' %}
-                    <p>Haute</p>
-
+<tr>
+    <td>
+        <a href="{{ path('ticket_show', {'id': ticket.id}) }}">
+            {% if ticket.status == '1' %}
+                Nouveau
+            {% else %}
+                {% if ticket.status == '2' %}
+                    En cours
                 {% else %}
-                    {% if ticket.priority == '2' %}
-                        <p>Moyenne</p>
-                {% else %}
-                        <p>Faible</p>
-                    {% endif %}
+                    Résolue
                 {% endif %}
-        </span>
-        <span class="status">
-                <p>Status :</p>
-                {% if ticket.status == '1' %}
-                    <p>Nouveau</p>
+            {% endif %}
+        </a>
+    </td>
+    <td>
+        <a href="{{ path('ticket_show', {'id': ticket.id}) }}">
+            {% if ticket.priority == '1' %}
+                Haute
+            {% else %}
+                {% if ticket.priority == '2' %}
+                    Moyenne
                 {% else %}
-                    {% if ticket.status == '2' %}
-                        <p>En cours</p>
-                {% else %}
-                        <p>Résolue</p>
-                    {% endif %}
+                    Faible
                 {% endif %}
-        </span>
+            {% endif %}
+        </a>
+    </td>
+    <td>
+        <a href="{{ path('ticket_show', {'id': ticket.id}) }}">
+            {{ ticket.author.username }}
+        </a>
+    </td>
+    <td>
+        <a href="{{ path('ticket_show', {'id': ticket.id}) }}">
+        {{ ticket.description }}
+        </a>
+    </td>
+    <td>
+        <a href="{{ path('ticket_show', {'id': ticket.id}) }}">
+            <div class="fw-light fs-6">
+                <p>Créé le : {{ ticket.createDate|date('d/m/Y') }}</p>
+                {% if ticket.updateDate is not null %}
+                <p>Modifié le : {{ ticket.updateDate|date('d/m/Y') }}</p>
+                {% endif %}
+            </div>
+        </a>
+    </td>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <td>
+            <div>
+                <form action="{{ path('ticket_edit', {'id':ticket.id}) }}" method="post">
+                    <button type="submit">modifier le ticket</button>
+                </form>
+                {% if (not is_granted('ROLE_USER') or ticket.author.id==userid) %}
+                    <form action="{{ path('ticket_delete', {'id':ticket.id}) }}" method="post">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit">Supprimer le ticket</button>
+                    </form>
+                {% endif %}
+            </div>
+        </td>
+    {% endif %}
+</tr>
 
-        <p class="description">{{ ticket.description }}</p>
 
-        {% if ticket.updateDate is not null %}
-            <p> modifié le : {{ ticket.updateDate|date('d-m-Y H:i:s') }} </p>
-        {% endif %}
+{#
+<article class="ticket">
+    <span> {{ ticket.createDate|date('d-m-Y H:i:s') }}</span>
+    <span class="priority">
+            <p>Priorité :</p>
+            {% if ticket.priority == '1' %}
+                <p>Haute</p>
 
-        <p>écrit par : {{ ticket.author.username }}</p>
+            {% else %}
+                {% if ticket.priority == '2' %}
+                    <p>Moyenne</p>
+            {% else %}
+                    <p>Faible</p>
+                {% endif %}
+            {% endif %}
+    </span>
+    <span class="status">
+            <p>Status :</p>
+            {% if ticket.status == '1' %}
+                <p>Nouveau</p>
+            {% else %}
+                {% if ticket.status == '2' %}
+                    <p>En cours</p>
+            {% else %}
+                    <p>Résolue</p>
+                {% endif %}
+            {% endif %}
+    </span>
 
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <p class="description">{{ ticket.description }}</p>
+
+    {% if ticket.updateDate is not null %}
+        <p> modifié le : {{ ticket.updateDate|date('d-m-Y H:i:s') }} </p>
+    {% endif %}
+
+    <p>écrit par : {{ ticket.author.username }}</p>
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div>
             <form action="{{ path('ticket_edit', {'id':ticket.id}) }}" method="post">
                 <button type="submit">modifier le ticket</button>
             </form>
@@ -44,9 +110,8 @@
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit">Supprimer le ticket</button>
                 </form>
-            {% else %}
-                <p>toto</p>
             {% endif %}
-        {% endif %}
-    </article>
-</a>
+        </div>
+    {% endif %}
+</article>
+</a> #}

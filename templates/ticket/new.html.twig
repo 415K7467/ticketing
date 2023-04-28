@@ -14,9 +14,7 @@
         {{ form_row(form.status) }}
     {% endif %}
 
-    <button type="submit">
-        {{ 'Créer le ticket'|trans }}
-    </button>
+    <button type="submit">Créer le ticket</button>
     {{ form_widget(form.saveAndCreateNew, {label: 'Enregistrer et faire un autre ticket'}) }}
     {{ form_end(form) }}
     <form action="{{ path('app_ticket') }}" method="post">
