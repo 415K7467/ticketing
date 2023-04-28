@@ -1,26 +1,3 @@
-<<<<<<< Updated upstream
-<nav class="navbar bg-light">
-    <ul>
-
-    </ul>
-    <div class="stat nav-item" role="presentation">
-        <p> {{ counts['global_count'] }} tickets dans le système</p>
-        <ul>
-            <li>{{ counts['priorityHigh'] }} priorité haute</li>
-            <li>{{ counts['priorityMedium'] }} priorité moyenne</li>
-            <li>{{ counts['priorityLow'] }} priorité faible</li>
-        </ul>
-        <ul>
-            <li>{{ counts['statusNew'] }} nouveaux tickets</li>
-            <li>{{ counts['statusProgress'] }} tickets en cours d'assistance</li>
-            <li>{{ counts['statusResolved'] }} tickets résolus</li>
-        </ul>
-    </div>
-    <div class="right">
-        <form action="{{ path('app_ticket') }}" method="post">
-            <button class="btn-secondary" type="submit">Menu</button>
-        </form>
-=======
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -62,32 +39,8 @@
                 <button type="submit">Menu</button>
             </form>
         </li>
->>>>>>> Stashed changes
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             {% if is_granted('ROLE_ADMIN') %}
-<<<<<<< Updated upstream
-                <form action="{{ path('app_users') }}" method="post">
-                    <button class="btn-secondary" type="submit">Panel Admin</button>
-                </form>
-                |
-            {% endif %}
-            <form action="{{ path('new_ticket') }}" method="post">
-                <button class="btn-secondary" type="submit">Nouveau ticket</button>
-            </form>
-            |
-            <form action="{{ path('app_logout') }}" method="post">
-                <button class="btn-secondary" type="submit">Déconnexion</button>
-            </form>
-        {% else %}
-            <form action="{{ path('app_login') }}" method="post">
-                <button class="btn-secondary" type="submit">Connexion</button>
-            </form>
-            |
-            <form action="{{ path('app_register') }}" method="post">
-                <button class="btn-secondary" type="submit">Nouveau compte</button>
-            </form>
-
-=======
                 <li class="nav-item me-auto">
                     <form action="{{ path('app_users') }}" method="post">
                         <button type="submit">Panel Admin</button>
@@ -115,7 +68,6 @@
                     <button type="submit">Nouveau compte</button>
                 </form>
             </li>
->>>>>>> Stashed changes
         {% endif %}
     </ul>
 </nav>
