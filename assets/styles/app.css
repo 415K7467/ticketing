@@ -4,9 +4,11 @@
     list-style: none;
 }
 
-body {
-    background-color: lightgray;
+a, a:link, a:hover {
+    color: inherit;
+    text-decoration: inherit;
 }
+
 
 /*
 nav, .stat, .right{

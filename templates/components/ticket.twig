@@ -1,28 +1,50 @@
 <tr>
     <td>
-        {% if ticket.status == '1' %}
-            Nouveau
-        {% else %}
-            {% if ticket.status == '2' %}
-                En cours
+        <a href="{{ path('ticket_show', {'id': ticket.id}) }}">
+            {% if ticket.status == '1' %}
+                Nouveau
             {% else %}
-                Résolue
+                {% if ticket.status == '2' %}
+                    En cours
+                {% else %}
+                    Résolue
+                {% endif %}
             {% endif %}
-        {% endif %}
+        </a>
     </td>
     <td>
-        {% if ticket.priority == '1' %}
-            Haute
-        {% else %}
-            {% if ticket.priority == '2' %}
-                Moyenne
+        <a href="{{ path('ticket_show', {'id': ticket.id}) }}">
+            {% if ticket.priority == '1' %}
+                Haute
             {% else %}
-                Faible
+                {% if ticket.priority == '2' %}
+                    Moyenne
+                {% else %}
+                    Faible
+                {% endif %}
             {% endif %}
-        {% endif %}
+        </a>
     </td>
-    <td>{{ ticket.author.username }}</td>
-    <td><a href={{ path('ticket_show', {'id': ticket.id}) }}>{{ ticket.description }}</a></td>
+    <td>
+        <a href="{{ path('ticket_show', {'id': ticket.id}) }}">
+            {{ ticket.author.username }}
+        </a>
+    </td>
+    <td>
+        <a href="{{ path('ticket_show', {'id': ticket.id}) }}">
+        {{ ticket.description }}
+        </a>
+    </td>
+    <td>
+        <a href="{{ path('ticket_show', {'id': ticket.id}) }}">
+            <div class="fw-light fs-6">
+                <p>Créé le : {{ ticket.createDate|date('d/m/Y') }}</p>
+                {% if ticket.updateDate is not null %}
+                <p>Modifié le : {{ ticket.updateDate|date('d/m/Y') }}</p>
+                {% endif %}
+            </div>
+        </a>
+    </td>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <td>
             <div>

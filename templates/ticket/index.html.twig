@@ -8,9 +8,8 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
+                    <table class="table table-striped text-center">
+                        <thead class="table-dark">
                             <th>
                                 Etat
                             </th>
@@ -23,16 +22,18 @@
                             <th>
                                 Description
                             </th>
+                            <th>
+                                Edition
+                            </th>
                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                             <th>
                                 Actions
                             </th>
                             {% endif %}
-                        </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="">
                         {% for ticket in tickets %}
-                            {% include './components/ticket.twig' with {'ticket': ticket} %}
+                            {% include '/components/ticket.twig' with {'ticket': ticket} %}
                         {% endfor %}
                         </tbody>
                     </table>

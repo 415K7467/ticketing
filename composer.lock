@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "57145cb05eba7137e31a9aab8b998180",
+    "content-hash": "bb5379b462f2ff7023a8170b05ff1161",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -7146,16 +7146,16 @@
         },
         {
             "name": "twbs/bootstrap",
-            "version": "v5.3.0-alpha3",
+            "version": "v5.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "ac576614a5515e429f27e756fad81d5aa05e95a6"
+                "reference": "cb021439c683d9805e2864c58095b92d405e9b11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/ac576614a5515e429f27e756fad81d5aa05e95a6",
-                "reference": "ac576614a5515e429f27e756fad81d5aa05e95a6",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/cb021439c683d9805e2864c58095b92d405e9b11",
+                "reference": "cb021439c683d9805e2864c58095b92d405e9b11",
                 "shasum": ""
             },
             "replace": {
@@ -7190,9 +7190,9 @@
             ],
             "support": {
                 "issues": "https://github.com/twbs/bootstrap/issues",
-                "source": "https://github.com/twbs/bootstrap/tree/v5.3.0-alpha3"
+                "source": "https://github.com/twbs/bootstrap/tree/v5.2.3"
             },
-            "time": "2023-04-03T07:26:50+00:00"
+            "time": "2022-11-21T18:19:01+00:00"
         },
         {
             "name": "twig/extra-bundle",
@@ -9678,9 +9678,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "twbs/bootstrap": 15
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
