@@ -1,3 +1,5 @@
+@import "bootstrap";
+
 *{
     list-style: none;
 }
@@ -6,10 +8,7 @@ body {
     background-color: lightgray;
 }
 
-nav{
-    border: solid #878686;
-}
-
+/*
 nav, .stat, .right{
     display: flex;
     flex-direction: row;
@@ -25,3 +24,4 @@ nav, .stat, .right{
 .right{
     gap: 10px;
 }
+*/

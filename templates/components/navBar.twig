@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <nav class="navbar bg-light">
     <ul>
 
@@ -19,9 +20,52 @@
         <form action="{{ path('app_ticket') }}" method="post">
             <button class="btn-secondary" type="submit">Menu</button>
         </form>
+=======
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+
+    <a class="navbar-brand" href={{ path('app_ticket') }}>Menu</a>
+    <ul class="collapse navbar-collapse stat">
+        <li class="nav-item me-3">
+            <p class="navbar-text"> {{ counts['global_count'] }} tickets dans le système</p>
+        </li>
+        <li class="nav-item me-3">
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Priorités
+                </button>
+                <ul class="dropdown-menu">
+                    <li><p class="dropdown-item">{{ counts['priorityHigh'] }} hauts</p></li>
+                    <li><p class="dropdown-item">{{ counts['priorityMedium'] }} moyens</p></li>
+                    <li><p class="dropdown-item">{{ counts['priorityLow'] }} faibles</p></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item me-3">
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Status
+                </button>
+                <ul class="dropdown-menu">
+                    <li><p class="dropdown-item">{{ counts['statusNew'] }} nouveaux</p></li>
+                    <li><p class="dropdown-item">{{ counts['statusProgress'] }} en cours d'assistance</p></li>
+                    <li><p class="dropdown-item">{{ counts['statusResolved'] }} résolus</p></li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+    <ul class="collapse navbar-collapse">
+        <li class="nav-item me-auto">
+            <form action="{{ path('app_ticket') }}" method="post">
+                <button type="submit">Menu</button>
+            </form>
+        </li>
+>>>>>>> Stashed changes
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            |
             {% if is_granted('ROLE_ADMIN') %}
+<<<<<<< Updated upstream
                 <form action="{{ path('app_users') }}" method="post">
                     <button class="btn-secondary" type="submit">Panel Admin</button>
                 </form>
@@ -43,6 +87,35 @@
                 <button class="btn-secondary" type="submit">Nouveau compte</button>
             </form>
 
+=======
+                <li class="nav-item me-auto">
+                    <form action="{{ path('app_users') }}" method="post">
+                        <button type="submit">Panel Admin</button>
+                    </form>
+                </li>
+            {% endif %}
+            <li class="nav-item me-auto">
+                <form action="{{ path('new_ticket') }}" method="post">
+                    <button type="submit">Nouveau ticket</button>
+                </form>
+            </li>
+            <li class="nav-item me-auto">
+                <form action="{{ path('app_logout') }}" method="post">
+                    <button type="submit">Déconnexion</button>
+                </form>
+            </li>
+        {% else %}
+            <li class="nav-item me-auto">
+                <form action="{{ path('app_login') }}" method="post">
+                    <button type="submit">Connexion</button>
+                </form>
+            </li>
+            <li class="nav-item me-auto">
+                <form action="{{ path('app_register') }}" method="post">
+                    <button type="submit">Nouveau compte</button>
+                </form>
+            </li>
+>>>>>>> Stashed changes
         {% endif %}
-    </div>
+    </ul>
 </nav>
