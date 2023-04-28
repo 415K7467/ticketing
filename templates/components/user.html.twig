@@ -1,12 +1,20 @@
-<article class="ticket" style="border: solid; margin: 10px">
-    <h3>{{ user.username }}</h3>
-    <span>{{ user.roles[0] }}</span>
-    {% if user.roles[0]!='ROLE_ADMIN' %}
-        <a href="{{ path('user_edit', {'id': user.id}) }}">Edit</a>
+<tr>
+    <td>{{ user.username }}</td>
+    <td>{{ user.roles[0] }}</td>
+    <td>
+        {% if user.roles[0]!='ROLE_ADMIN' %}
+            <div>
+                <a href="{{ path('user_edit', {'id': user.id}) }}">
+                    Edit
+                </a>
 
-        <form action="{{ path('user_delete', {'id':user.id}) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE">
-            <button type="submit">Supprimer l'utilisateur</button>
-        </form>
-    {% endif %}
-</article>
+                <form action="{{ path('user_delete', {'id':user.id}) }}" method="post">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit">Supprimer l'utilisateur</button>
+                </form>
+            </div>
+        {% else %}
+            <p></p>
+        {% endif %}
+    </td>
+</tr>

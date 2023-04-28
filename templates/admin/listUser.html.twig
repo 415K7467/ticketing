@@ -3,16 +3,33 @@
 {% block title %}Hello!{% endblock %}
 
 {% block body %}
-    <div class="example-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                {% if users|length > 0 %}
+                    <table class="table table-striped text-center">
+                        <thead class="table-dark">
+                        <th>
+                            Nom
+                        </th>
+                        <th>
+                            Role
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            {% include '/components/user.html.twig' with {'user': user} %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
 
-        {% if users|length > 0 %}
-            <ul>
-                {% for user in users %}
-                    {% include './components/user.html.twig' with {'user': user} %}
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>pas de tickets</p>
-        {% endif %}
+                {% else %}
+                    <p>pas de comptes</p>
+                {% endif %}
+            </div>
+        </div>
     </div>
 {% endblock %}
