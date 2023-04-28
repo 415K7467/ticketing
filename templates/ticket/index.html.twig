@@ -3,33 +3,33 @@
 {% block title %}Hello TicketController!{% endblock %}
 
 {% block body %}
-    <div class="example-wrapper">
-        {% if tickets|length > 0 %}
+
+    {% if tickets|length > 0 %}
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <table class="table table-striped text-center">
                         <thead class="table-dark">
-                            <th>
-                                Etat
-                            </th>
-                            <th>
-                                Priorité
-                            </th>
-                            <th>
-                                Auteur
-                            </th>
-                            <th>
-                                Description
-                            </th>
-                            <th>
-                                Edition
-                            </th>
-                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <th>
+                            Etat
+                        </th>
+                        <th>
+                            Priorité
+                        </th>
+                        <th>
+                            Auteur
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Edition
+                        </th>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                             <th>
                                 Actions
                             </th>
-                            {% endif %}
+                        {% endif %}
                         </thead>
                         <tbody class="">
                         {% for ticket in tickets %}
@@ -40,10 +40,9 @@
                 </div>
             </div>
         </div>
-        {% else %}
-            <p>pas de tickets</p>
-        {% endif %}
-    </div>
+    {% else %}
+        <p>pas de tickets</p>
+    {% endif %}
 {% endblock %}
             {#
             <ul>
