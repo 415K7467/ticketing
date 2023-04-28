@@ -34,11 +34,6 @@
         </li>
     </ul>
     <ul class="collapse navbar-collapse">
-        <li class="nav-item me-auto">
-            <form action="{{ path('app_ticket') }}" method="post">
-                <button type="submit">Menu</button>
-            </form>
-        </li>
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item me-auto">

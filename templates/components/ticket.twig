@@ -1,41 +1,85 @@
-<a href={{ path('ticket_show', {'id': ticket.id}) }}>
-    <article class="ticket" style="border: solid; margin: 10px">
-        <span> {{ ticket.createDate|date('d-m-Y H:i:s') }}</span>
-        <span class="priority">
-                <p>Priorité :</p>
-                {% if ticket.priority == '1' %}
-                    <p>Haute</p>
-
-                {% else %}
-                    {% if ticket.priority == '2' %}
-                        <p>Moyenne</p>
-                {% else %}
-                        <p>Faible</p>
-                    {% endif %}
-                {% endif %}
-        </span>
-        <span class="status">
-                <p>Status :</p>
-                {% if ticket.status == '1' %}
-                    <p>Nouveau</p>
-                {% else %}
-                    {% if ticket.status == '2' %}
-                        <p>En cours</p>
-                {% else %}
-                        <p>Résolue</p>
-                    {% endif %}
-                {% endif %}
-        </span>
-
-        <p class="description">{{ ticket.description }}</p>
-
-        {% if ticket.updateDate is not null %}
-            <p> modifié le : {{ ticket.updateDate|date('d-m-Y H:i:s') }} </p>
+<tr>
+    <td>
+        {% if ticket.status == '1' %}
+            Nouveau
+        {% else %}
+            {% if ticket.status == '2' %}
+                En cours
+            {% else %}
+                Résolue
+            {% endif %}
         {% endif %}
+    </td>
+    <td>
+        {% if ticket.priority == '1' %}
+            Haute
+        {% else %}
+            {% if ticket.priority == '2' %}
+                Moyenne
+            {% else %}
+                Faible
+            {% endif %}
+        {% endif %}
+    </td>
+    <td>{{ ticket.author.username }}</td>
+    <td><a href={{ path('ticket_show', {'id': ticket.id}) }}>{{ ticket.description }}</a></td>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <td>
+            <div>
+                <form action="{{ path('ticket_edit', {'id':ticket.id}) }}" method="post">
+                    <button type="submit">modifier le ticket</button>
+                </form>
+                {% if (not is_granted('ROLE_USER') or ticket.author.id==userid) %}
+                    <form action="{{ path('ticket_delete', {'id':ticket.id}) }}" method="post">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit">Supprimer le ticket</button>
+                    </form>
+                {% endif %}
+            </div>
+        </td>
+    {% endif %}
+</tr>
 
-        <p>écrit par : {{ ticket.author.username }}</p>
 
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+{#
+<article class="ticket">
+    <span> {{ ticket.createDate|date('d-m-Y H:i:s') }}</span>
+    <span class="priority">
+            <p>Priorité :</p>
+            {% if ticket.priority == '1' %}
+                <p>Haute</p>
+
+            {% else %}
+                {% if ticket.priority == '2' %}
+                    <p>Moyenne</p>
+            {% else %}
+                    <p>Faible</p>
+                {% endif %}
+            {% endif %}
+    </span>
+    <span class="status">
+            <p>Status :</p>
+            {% if ticket.status == '1' %}
+                <p>Nouveau</p>
+            {% else %}
+                {% if ticket.status == '2' %}
+                    <p>En cours</p>
+            {% else %}
+                    <p>Résolue</p>
+                {% endif %}
+            {% endif %}
+    </span>
+
+    <p class="description">{{ ticket.description }}</p>
+
+    {% if ticket.updateDate is not null %}
+        <p> modifié le : {{ ticket.updateDate|date('d-m-Y H:i:s') }} </p>
+    {% endif %}
+
+    <p>écrit par : {{ ticket.author.username }}</p>
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div>
             <form action="{{ path('ticket_edit', {'id':ticket.id}) }}" method="post">
                 <button type="submit">modifier le ticket</button>
             </form>
@@ -45,6 +89,7 @@
                     <button type="submit">Supprimer le ticket</button>
                 </form>
             {% endif %}
-        {% endif %}
-    </article>
-</a>
+        </div>
+    {% endif %}
+</article>
+</a> #}
